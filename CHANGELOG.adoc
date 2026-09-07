@@ -1,5 +1,12 @@
 = Changelog
 
+== Unreleased
+
+* Added `prepareThemedMermaidSvg`, an explicit-binding adapter over the independent https://github.com/dev-centr/themed-svg[Themed SVG] standard.
+* Pinned the pre-release generic transformer by Git commit.
+* Clarified that host CSS variables apply to inline SVG, not external `<img>` resources.
+* Preserved the existing Mermaid rewrite, normalization, preparation, and CLI APIs.
+
 == 0.1.0 (2026-07-29)
 
 * Initial release: `rewriteMermaidSvgCssVars`, `normalizeMermaidSvgForWeb`, `prepareMermaidSvgForWeb`.

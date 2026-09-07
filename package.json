@@ -43,7 +43,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepare": "tsc -p tsconfig.json",
-    "test": "pnpm run build && node --test dist/test/normalize.test.js dist/test/prepare.test.js",
+    "test": "pnpm run build && node --test dist/test/*.test.js",
     "prepublishOnly": "pnpm run build"
   },
   "engines": {
@@ -53,5 +53,8 @@
     "@types/node": "^22.15.0",
     "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.11.0",
+  "dependencies": {
+    "@dev-centr/themed-svg": "github:dev-centr/themed-svg#38f48c7c04f9c21121816a8025cf256e8dc25af7"
+  }
 }

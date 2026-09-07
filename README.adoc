@@ -41,11 +41,11 @@ endif::[]
 
 == About The Project
 
-Intermediate library that post-processes *Mermaid-rendered SVG* so one prerendered diagram works under host light/dark themes, and embeds cleanly on the web.
+Mermaid adapter that post-processes rendered SVG for responsive web embedding and can apply the generator-neutral https://github.com/dev-centr/themed-svg[Themed SVG] standard.
 
 Package: `@openshellorg/mermaid-svg-css-vars`
 
-Mermaid derives theme colors with *khroma* from *concrete* color values — CSS custom properties cannot be used at render time. This package rewrites emitted SVG colors to `var(--mermaid-primaryColor, #resolvedFallback)` so the host theme can override without re-rendering.
+Mermaid derives theme colors with *khroma* from *concrete* color values, so CSS custom properties cannot be used as renderer inputs. The legacy API rewrites emitted colors to `var(--mermaid-primaryColor, #resolvedFallback)`. Those variables can be controlled when the SVG is inline; a page's CSS does not cross into an SVG loaded through `<img>`.
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -54,9 +54,10 @@ Mermaid derives theme colors with *khroma* from *concrete* color values — CSS 
 
 [source,bash]
 ----
-pnpm add @openshellorg/mermaid-svg-css-vars
-# until npm publish: pnpm add github:openshellorg/mermaid-svg-css-vars
+pnpm add github:openshellorg/mermaid-svg-css-vars
 ----
+
+The package and its `@dev-centr/themed-svg` dependency are not yet published to npm.
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -79,6 +80,23 @@ const ready = prepareMermaidSvgForWeb(svg, {
 });
 ----
 
+=== Themed SVG adapter
+
+New integrations should use an explicit Themed SVG manifest. Mermaid is the source renderer; the independent standard owns semantic tokens, bundled light/dark presets, fixed output, and host-boundary behavior.
+
+[source,ts]
+----
+import { prepareThemedMermaidSvg } from '@openshellorg/mermaid-svg-css-vars';
+
+const result = prepareThemedMermaidSvg(renderedMermaidSvg, manifest, {
+  // standalone-adaptive is the default
+  lightPalette: siteLightPalette,
+  darkPalette: siteDarkPalette,
+});
+----
+
+The dependency is pinned to a Git commit while both packages are pre-release.
+
 === CLI
 
 [source,bash]
@@ -87,7 +105,11 @@ mmdc -i diagram.mmd -o diagram.svg -c mermaid-config.json
 mermaid-svg-css-vars diagram.svg -o diagram.web.svg --theme-vars theme.json
 ----
 
-=== Host CSS example
+=== Embedding boundary
+
+Host CSS variables work only when the SVG is inline in the page. An SVG loaded through `<img>` is an isolated document and uses its concrete fallback values.
+
+For external images, use the Themed SVG adapter's self-contained `standalone-adaptive` output or paired fixed assets. For inline output, host variables can follow the site's manual theme state:
 
 [source,css]
 ----
