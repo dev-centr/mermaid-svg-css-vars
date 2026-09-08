@@ -31,5 +31,12 @@ it('adapts Mermaid output through the generator-neutral themed SVG contract', ()
 
   assert.equal(result.diagnostics.length, 0);
   assert.match(result.svg!, /var\(--themed-svg-mermaid-flow-color-surface-primary, #eef2ff\)/);
-  assert.match(result.svg!, /prefers-color-scheme:dark/);
+  assert.doesNotMatch(result.svg!, /prefers-color-scheme:dark/);
+
+  const adaptive = prepareThemedMermaidSvg(svg, manifest, {
+    mode: 'standalone-adaptive',
+  });
+
+  assert.equal(adaptive.diagnostics.length, 0);
+  assert.match(adaptive.svg!, /prefers-color-scheme:dark/);
 });

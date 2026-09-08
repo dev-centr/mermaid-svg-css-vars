@@ -89,7 +89,7 @@ New integrations should use an explicit Themed SVG manifest. Mermaid is the sour
 import { prepareThemedMermaidSvg } from '@openshellorg/mermaid-svg-css-vars';
 
 const result = prepareThemedMermaidSvg(renderedMermaidSvg, manifest, {
-  // standalone-adaptive is the default
+  mode: 'host',
   lightPalette: siteLightPalette,
   darkPalette: siteDarkPalette,
 });
@@ -99,17 +99,54 @@ The dependency is pinned to a Git commit while both packages are pre-release.
 
 === CLI
 
+The recommended CLI flow uses a Themed SVG manifest. The default `host` mode
+produces namespaced variables and concrete fallbacks for the `<themed-svg>`
+runtime path:
+
 [source,bash]
 ----
 mmdc -i diagram.mmd -o diagram.svg -c mermaid-config.json
-mermaid-svg-css-vars diagram.svg -o diagram.web.svg --theme-vars theme.json
+mermaid-svg-css-vars --manifest diagram.theme.json diagram.svg -o diagram.themed.svg
 ----
+
+Choose another generic output mode when the embedding boundary requires it:
+
+[source,bash]
+----
+# Self-contained light/dark SVG for an external <img>
+mermaid-svg-css-vars --manifest diagram.theme.json \
+  --mode standalone-adaptive diagram.svg -o diagram.adaptive.svg
+
+# Concrete light and dark files; names default to diagram.light.svg
+# and diagram.dark.svg
+mermaid-svg-css-vars --manifest diagram.theme.json \
+  --mode paired-fixed diagram.svg
+----
+
+Generic manifest options also accept `--preset`, `--palette`,
+`--light-palette`, `--dark-palette`, `--light-output`, and `--dark-output`.
+Transform diagnostics are written to stderr; an error diagnostic exits with
+status 2 and emits no SVG.
+
+The older `--theme-vars`, `--prefix`, `--no-css-variables`, and web
+normalization flags remain available only as a compatibility route:
+
+[source,bash]
+----
+mermaid-svg-css-vars --theme-vars theme.json --prefix --mermaid- \
+  diagram.svg -o diagram.legacy.svg
+----
+
+Manifest and legacy options cannot be mixed.
 
 === Embedding boundary
 
 Host CSS variables work only when the SVG is inline in the page. An SVG loaded through `<img>` is an isolated document and uses its concrete fallback values.
 
-For external images, use the Themed SVG adapter's self-contained `standalone-adaptive` output or paired fixed assets. For inline output, host variables can follow the site's manual theme state:
+The recommended `<themed-svg>` runtime path consumes `host` output and controls
+its namespaced variables. For a plain external image, use the adapter's
+self-contained `standalone-adaptive` output or paired fixed assets. Legacy
+inline output can still follow the site's manual theme state:
 
 [source,css]
 ----

@@ -8,4 +8,15 @@ Mermaid adapter for responsive SVG normalization and the generator-neutral [Them
 pnpm add github:openshellorg/mermaid-svg-css-vars
 ```
 
-The legacy color rewriter remains available. New integrations can call `prepareThemedMermaidSvg()` with explicit semantic bindings and bundled light/dark palettes. Host CSS variables do not cross an external `<img>` boundary; see **README.adoc** for output modes and examples.
+The recommended CLI flow produces `host` output for the `<themed-svg>` runtime
+path:
+
+```bash
+mermaid-svg-css-vars --manifest diagram.theme.json diagram.svg -o diagram.themed.svg
+```
+
+Use `--mode standalone-adaptive` for a self-contained external `<img>`, or
+`--mode paired-fixed` for concrete light/dark files. The legacy `--theme-vars`,
+prefix, CSS-variable, and web-normalization flags remain available as a
+separate compatibility route. See **README.adoc** for manifests, palettes,
+output modes, and embedding-boundary details.

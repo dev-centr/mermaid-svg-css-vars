@@ -55,6 +55,6 @@
   },
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
-    "@dev-centr/themed-svg": "github:dev-centr/themed-svg#38f48c7c04f9c21121816a8025cf256e8dc25af7"
+    "@dev-centr/themed-svg": "github:dev-centr/themed-svg#30cc93eb85b02a1ca12c0870b5b71005bfdf059c"
   }
 }
