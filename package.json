@@ -1,6 +1,6 @@
 {
   "name": "@dev-centr/mermaid-svg-css-vars",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Rewrite Mermaid-rendered SVG theme colors to CSS custom properties with fallbacks, plus web-embedding normalization.",
   "type": "module",
   "license": "MIT",
@@ -42,6 +42,7 @@
     "bin",
     "README.adoc",
     "CHANGELOG.adoc",
+    "changelog-details",
     "LICENSE"
   ],
   "scripts": {

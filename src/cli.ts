@@ -1,7 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { basename, dirname, extname, join } from 'node:path';
+import { basename, dirname, extname, join, resolve } from 'node:path';
 import { prepareMermaidSvgForWeb } from './prepare.js';
-import { prepareThemedMermaidSvg } from './themed.js';
+import {
+  prepareThemedMermaidSvg,
+  prepareThemedMermaidSvgDualOutput,
+} from './themed.js';
 import type {
   OutputMode,
   Palette,
@@ -20,7 +23,8 @@ Options:
   -o, --output <file>         Write result to file (default: stdout)
   --manifest <file>           Themed SVG version 1 explicit-binding manifest
   --mode <mode>               host (default), standalone-adaptive, fixed,
-                              paired-fixed, or dual
+                              or paired-fixed
+  --dual-output               Write adaptive and host outputs together
   --preset <name>             Manifest preset for fixed/host fallback
   --palette <file>            Shared runtime JSON palette
   --light-palette <file>      Runtime light-mode JSON palette
@@ -41,7 +45,8 @@ Legacy compatibility options:
 
 Examples:
   mermaid-svg-css-vars --manifest diagram.theme.json diagram.svg -o diagram.themed.svg
-  mermaid-svg-css-vars --manifest diagram.theme.json --mode dual --check diagram.raw.svg
+  mermaid-svg-css-vars --manifest diagram.theme.json --dual-output diagram.raw.svg
+  mermaid-svg-css-vars --manifest diagram.theme.json --dual-output --check diagram.raw.svg
   mermaid-svg-css-vars --manifest diagram.theme.json --mode paired-fixed diagram.svg
   mermaid-svg-css-vars --theme-vars theme.json --prefix --mermaid- diagram.svg
 `);
@@ -57,6 +62,7 @@ function parseArgs(argv: string[]) {
     palettePath: '' as string,
     lightPalettePath: '' as string,
     darkPalettePath: '' as string,
+    dualOutput: false,
     hostOutput: '' as string,
     lightOutput: '' as string,
     darkOutput: '' as string,
@@ -95,6 +101,10 @@ function parseArgs(argv: string[]) {
         break;
       case '--mode':
         args.mode = value();
+        args.genericFlags.push(a);
+        break;
+      case '--dual-output':
+        args.dualOutput = true;
         args.genericFlags.push(a);
         break;
       case '--preset':
@@ -188,6 +198,8 @@ function deliveryName(input: string, host: boolean): string {
 }
 
 function runManifestRoute(args: ReturnType<typeof parseArgs>): number {
+  // Keep the 0.1.1 --mode dual spelling as a compatibility alias.
+  if (args.mode === 'dual') args.dualOutput = true;
   const modes: Array<OutputMode | 'dual'> = [
     'fixed',
     'standalone-adaptive',
@@ -199,18 +211,21 @@ function runManifestRoute(args: ReturnType<typeof parseArgs>): number {
     throw new Error(`Unknown mode: ${args.mode}`);
   }
   if (
-    args.mode !== 'paired-fixed' &&
+    (args.mode !== 'paired-fixed' || args.dualOutput) &&
     (args.lightOutput || args.darkOutput)
   ) {
     throw new Error(
       '--light-output and --dark-output require --mode paired-fixed'
     );
   }
-  if (args.mode !== 'dual' && args.hostOutput) {
-    throw new Error('--host-output requires --mode dual');
+  if (!args.dualOutput && args.hostOutput) {
+    throw new Error('--host-output requires --dual-output');
   }
-  if (args.mode !== 'dual' && args.check) {
-    throw new Error('--check requires --mode dual');
+  if (!args.dualOutput && args.check) {
+    throw new Error('--check requires --dual-output');
+  }
+  if (args.dualOutput && args.mode !== 'host' && args.mode !== 'dual') {
+    throw new Error('--dual-output cannot be combined with --mode');
   }
 
   const svg = readFileSync(args.input, 'utf8');
@@ -218,7 +233,7 @@ function runManifestRoute(args: ReturnType<typeof parseArgs>): number {
     readFileSync(args.manifestPath, 'utf8')
   ) as ThemedSvgManifest;
   const options: TransformOptions = {
-    mode: args.mode === 'dual' ? 'standalone-adaptive' : args.mode as OutputMode,
+    mode: args.mode === 'dual' ? 'host' : args.mode as OutputMode,
   };
   if (args.preset) options.preset = args.preset;
   const palette = readPalette(args.palettePath);
@@ -228,35 +243,34 @@ function runManifestRoute(args: ReturnType<typeof parseArgs>): number {
   if (lightPalette) options.lightPalette = lightPalette;
   if (darkPalette) options.darkPalette = darkPalette;
 
-  const result = prepareThemedMermaidSvg(svg, manifest, options);
-  const hostResult = args.mode === 'dual'
-    ? prepareThemedMermaidSvg(svg, manifest, { ...options, mode: 'host' })
-    : undefined;
-  for (const diagnostic of [
-    ...result.diagnostics,
-    ...(hostResult?.diagnostics ?? []),
-  ]) {
-    process.stderr.write(
-      `${diagnostic.severity}: ${diagnostic.code}: ${diagnostic.message}\n`
+  if (args.dualOutput) {
+    const { mode: _mode, ...dualOptions } = options;
+    const result = prepareThemedMermaidSvgDualOutput(
+      svg,
+      manifest,
+      dualOptions
     );
-  }
-  if (
-    result.diagnostics.some(({ severity }) => severity === 'error')
-    || hostResult?.diagnostics.some(({ severity }) => severity === 'error')
-  ) {
-    return 2;
-  }
-
-  if (args.mode === 'dual') {
-    if (result.svg === undefined || hostResult?.svg === undefined) {
-      throw new Error('dual transformation produced incomplete output');
+    for (const diagnostic of result.diagnostics) {
+      process.stderr.write(
+        `${diagnostic.output}: ${diagnostic.severity}: ${diagnostic.code}: ${diagnostic.message}\n`
+      );
+    }
+    if (
+      result.diagnostics.some(({ severity }) => severity === 'error') ||
+      result.standaloneSvg === undefined ||
+      result.hostSvg === undefined
+    ) {
+      return 2;
     }
     const adaptiveOutput = args.output || deliveryName(args.input, false);
     const hostOutput = args.hostOutput || deliveryName(args.input, true);
+    if (resolve(adaptiveOutput) === resolve(hostOutput)) {
+      throw new Error('dual output paths must be different');
+    }
     if (args.check) {
       const stale = [
-        [adaptiveOutput, result.svg],
-        [hostOutput, hostResult.svg],
+        [adaptiveOutput, result.standaloneSvg],
+        [hostOutput, result.hostSvg],
       ].filter(([path, expected]) =>
         !existsSync(path!) || readFileSync(path!, 'utf8') !== expected
       );
@@ -265,10 +279,23 @@ function runManifestRoute(args: ReturnType<typeof parseArgs>): number {
         return 3;
       }
     } else {
-      writeFileSync(adaptiveOutput, result.svg, 'utf8');
-      writeFileSync(hostOutput, hostResult.svg, 'utf8');
+      writeFileSync(adaptiveOutput, result.standaloneSvg, 'utf8');
+      writeFileSync(hostOutput, result.hostSvg, 'utf8');
     }
-  } else if (args.mode === 'paired-fixed') {
+    return 0;
+  }
+
+  const result = prepareThemedMermaidSvg(svg, manifest, options);
+  for (const diagnostic of result.diagnostics) {
+    process.stderr.write(
+      `${diagnostic.severity}: ${diagnostic.code}: ${diagnostic.message}\n`
+    );
+  }
+  if (result.diagnostics.some(({ severity }) => severity === 'error')) {
+    return 2;
+  }
+
+  if (args.mode === 'paired-fixed') {
     if (result.lightSvg === undefined || result.darkSvg === undefined) {
       throw new Error('paired-fixed transformation produced no paired output');
     }

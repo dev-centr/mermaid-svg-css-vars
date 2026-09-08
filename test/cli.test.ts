@@ -84,7 +84,7 @@ describe('manifest CLI route', () => {
     const raw = join(directory, 'system.raw.svg');
     writeFileSync(raw, svg, 'utf8');
 
-    const generated = run(['--manifest', manifest, '--mode', 'dual', raw]);
+    const generated = run(['--manifest', manifest, '--dual-output', raw]);
     const adaptive = join(directory, 'system.svg');
     const host = join(directory, 'system.host.svg');
     assert.equal(generated.status, 0, generated.stderr);
@@ -95,10 +95,10 @@ describe('manifest CLI route', () => {
     );
     assert.doesNotMatch(readFileSync(host, 'utf8'), /prefers-color-scheme/);
 
-    const current = run(['--manifest', manifest, '--mode', 'dual', '--check', raw]);
+    const current = run(['--manifest', manifest, '--dual-output', '--check', raw]);
     assert.equal(current.status, 0, current.stderr);
     writeFileSync(host, 'stale', 'utf8');
-    const stale = run(['--manifest', manifest, '--mode', 'dual', '--check', raw]);
+    const stale = run(['--manifest', manifest, '--dual-output', '--check', raw]);
     assert.equal(stale.status, 3);
     assert.match(stale.stderr, /stale: .*system\.host\.svg/);
   });
@@ -110,8 +110,7 @@ describe('manifest CLI route', () => {
     const result = run([
       '--manifest',
       manifest,
-      '--mode',
-      'dual',
+      '--dual-output',
       '--output',
       adaptive,
       '--host-output',
@@ -230,11 +229,10 @@ describe('CLI argument validation', () => {
       ['--palette', themeVars, input],
       ['--light-palette', themeVars, input],
       ['--dark-palette', themeVars, input],
+      ['--dual-output', input],
       ['--host-output', join(directory, 'host.svg'), input],
       ['--light-output', join(directory, 'light.svg'), input],
       ['--dark-output', join(directory, 'dark.svg'), input],
-      ['--check', input],
-      ['--host-output', join(directory, 'host.svg'), input],
       ['--check', input],
       ['--manifest', manifest, '--prefix', '--custom-', input],
       ['--manifest', manifest, '--no-css-variables', input],
@@ -245,6 +243,7 @@ describe('CLI argument validation', () => {
       ['--manifest', manifest, '--dark-output', join(directory, 'dark.svg'), input],
       ['--manifest', manifest, '--host-output', join(directory, 'host.svg'), input],
       ['--manifest', manifest, '--check', input],
+      ['--manifest', manifest, '--dual-output', '--mode', 'fixed', input],
       ['--manifest', manifest, '--mode', 'unknown', input],
       ['--manifest'],
       ['--mode'],

@@ -104,11 +104,11 @@ use `dual` mode to write the portable adaptive artifact and its host sibling:
 ----
 mmdc -i diagram.mmd -o diagram.raw.svg -c mermaid-config.json
 mermaid-svg-css-vars --manifest diagram.theme.json \
-  --mode dual diagram.raw.svg
+  --dual-output diagram.raw.svg
 
 # CI: exit 3 and report each stale or missing committed artifact
 mermaid-svg-css-vars --manifest diagram.theme.json \
-  --mode dual --check diagram.raw.svg
+  --dual-output --check diagram.raw.svg
 ----
 
 The default names are `diagram.svg` for `standalone-adaptive` output and
@@ -131,9 +131,10 @@ mermaid-svg-css-vars --manifest diagram.theme.json \
 ----
 
 Generic manifest options also accept `--preset`, `--palette`,
-`--light-palette`, `--dark-palette`, `--light-output`, and `--dark-output`.
-Transform diagnostics are written to stderr; an error diagnostic exits with
-status 2 and emits no SVG.
+`--light-palette`, `--dark-palette`, `--host-output`, `--light-output`, and
+`--dark-output`. Transform diagnostics are written to stderr; an error
+diagnostic exits with status 2 and emits no SVG. A dual freshness mismatch
+exits with status 3.
 
 The older `--theme-vars`, `--prefix`, `--no-css-variables`, and web
 normalization flags remain available only as a compatibility route:
