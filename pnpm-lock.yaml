@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dev-centr/themed-svg':
-        specifier: github:dev-centr/themed-svg#30cc93eb85b02a1ca12c0870b5b71005bfdf059c
-        version: https://codeload.github.com/dev-centr/themed-svg/tar.gz/30cc93eb85b02a1ca12c0870b5b71005bfdf059c
+        specifier: ^0.1.0
+        version: 0.1.0
     devDependencies:
       '@types/node':
         specifier: ^22.15.0
@@ -21,9 +21,8 @@ importers:
 
 packages:
 
-  '@dev-centr/themed-svg@https://codeload.github.com/dev-centr/themed-svg/tar.gz/30cc93eb85b02a1ca12c0870b5b71005bfdf059c':
-    resolution: {tarball: https://codeload.github.com/dev-centr/themed-svg/tar.gz/30cc93eb85b02a1ca12c0870b5b71005bfdf059c}
-    version: 0.1.0
+  '@dev-centr/themed-svg@0.1.0':
+    resolution: {integrity: sha512-y2NPWHiLtYEKe87f80VQq7oggL/uO5kTNJUW6pvIgt1zpnlDJ4ybQuGrKoo+vTXWO2Y3yHOmEUBIULKgjhBGAA==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -80,7 +79,7 @@ packages:
 
 snapshots:
 
-  '@dev-centr/themed-svg@https://codeload.github.com/dev-centr/themed-svg/tar.gz/30cc93eb85b02a1ca12c0870b5b71005bfdf059c':
+  '@dev-centr/themed-svg@0.1.0':
     dependencies:
       '@xmldom/xmldom': 0.8.15
       color-name: 2.1.1
