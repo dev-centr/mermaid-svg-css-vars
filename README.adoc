@@ -93,19 +93,28 @@ const result = prepareThemedMermaidSvg(renderedMermaidSvg, manifest, {
 });
 ----
 
-The dependency is pinned to a Git commit while both packages are pre-release.
+The adapter consumes the published `@dev-centr/themed-svg` package.
 
 === CLI
 
-The recommended CLI flow uses a Themed SVG manifest. The default `host` mode
-produces namespaced variables and concrete fallbacks for the `<themed-svg>`
-runtime path:
+The recommended CLI flow uses a Themed SVG manifest. Render Mermaid once, then
+use `dual` mode to write the portable adaptive artifact and its host sibling:
 
 [source,bash]
 ----
-mmdc -i diagram.mmd -o diagram.svg -c mermaid-config.json
-mermaid-svg-css-vars --manifest diagram.theme.json diagram.svg -o diagram.themed.svg
+mmdc -i diagram.mmd -o diagram.raw.svg -c mermaid-config.json
+mermaid-svg-css-vars --manifest diagram.theme.json \
+  --mode dual diagram.raw.svg
+
+# CI: exit 3 and report each stale or missing committed artifact
+mermaid-svg-css-vars --manifest diagram.theme.json \
+  --mode dual --check diagram.raw.svg
 ----
+
+The default names are `diagram.svg` for `standalone-adaptive` output and
+`diagram.host.svg` for runtime output. Use `--output` and `--host-output` to
+override them. The default `host` mode remains available when only one output
+is needed.
 
 Choose another generic output mode when the embedding boundary requires it:
 

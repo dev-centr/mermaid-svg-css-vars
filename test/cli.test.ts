@@ -79,6 +79,50 @@ describe('manifest CLI route', () => {
     assert.match(result.stdout, /prefers-color-scheme:dark/);
   });
 
+  it('writes and checks portable plus host delivery artifacts together', () => {
+    const { directory, manifest } = fixture();
+    const raw = join(directory, 'system.raw.svg');
+    writeFileSync(raw, svg, 'utf8');
+
+    const generated = run(['--manifest', manifest, '--mode', 'dual', raw]);
+    const adaptive = join(directory, 'system.svg');
+    const host = join(directory, 'system.host.svg');
+    assert.equal(generated.status, 0, generated.stderr);
+    assert.match(readFileSync(adaptive, 'utf8'), /prefers-color-scheme:dark/);
+    assert.match(
+      readFileSync(host, 'utf8'),
+      /var\(--themed-svg-mermaid-flow-color-surface-primary, #eef2ff\)/
+    );
+    assert.doesNotMatch(readFileSync(host, 'utf8'), /prefers-color-scheme/);
+
+    const current = run(['--manifest', manifest, '--mode', 'dual', '--check', raw]);
+    assert.equal(current.status, 0, current.stderr);
+    writeFileSync(host, 'stale', 'utf8');
+    const stale = run(['--manifest', manifest, '--mode', 'dual', '--check', raw]);
+    assert.equal(stale.status, 3);
+    assert.match(stale.stderr, /stale: .*system\.host\.svg/);
+  });
+
+  it('supports explicit dual output paths', () => {
+    const { directory, input, manifest } = fixture();
+    const adaptive = join(directory, 'portable.svg');
+    const host = join(directory, 'runtime.svg');
+    const result = run([
+      '--manifest',
+      manifest,
+      '--mode',
+      'dual',
+      '--output',
+      adaptive,
+      '--host-output',
+      host,
+      input,
+    ]);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(existsSync(adaptive), true);
+    assert.equal(existsSync(host), true);
+  });
+
   it('emits concrete fixed output without variables or media', () => {
     const { input, manifest } = fixture();
     const result = run([
@@ -186,8 +230,12 @@ describe('CLI argument validation', () => {
       ['--palette', themeVars, input],
       ['--light-palette', themeVars, input],
       ['--dark-palette', themeVars, input],
+      ['--host-output', join(directory, 'host.svg'), input],
       ['--light-output', join(directory, 'light.svg'), input],
       ['--dark-output', join(directory, 'dark.svg'), input],
+      ['--check', input],
+      ['--host-output', join(directory, 'host.svg'), input],
+      ['--check', input],
       ['--manifest', manifest, '--prefix', '--custom-', input],
       ['--manifest', manifest, '--no-css-variables', input],
       ['--manifest', manifest, '--no-web-compatibility', input],
@@ -195,6 +243,8 @@ describe('CLI argument validation', () => {
       ['--manifest', manifest, '--no-strip-background', input],
       ['--manifest', manifest, '--light-output', join(directory, 'light.svg'), input],
       ['--manifest', manifest, '--dark-output', join(directory, 'dark.svg'), input],
+      ['--manifest', manifest, '--host-output', join(directory, 'host.svg'), input],
+      ['--manifest', manifest, '--check', input],
       ['--manifest', manifest, '--mode', 'unknown', input],
       ['--manifest'],
       ['--mode'],
@@ -204,6 +254,7 @@ describe('CLI argument validation', () => {
       ['--dark-palette'],
       ['--light-output'],
       ['--dark-output'],
+      ['--host-output'],
       ['--theme-vars'],
       ['--prefix'],
       ['--output'],

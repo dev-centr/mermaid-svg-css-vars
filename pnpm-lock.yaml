@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dev-centr/themed-svg':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.1
+        version: 0.1.1
     devDependencies:
       '@types/node':
         specifier: ^22.15.0
@@ -21,8 +21,8 @@ importers:
 
 packages:
 
-  '@dev-centr/themed-svg@0.1.0':
-    resolution: {integrity: sha512-y2NPWHiLtYEKe87f80VQq7oggL/uO5kTNJUW6pvIgt1zpnlDJ4ybQuGrKoo+vTXWO2Y3yHOmEUBIULKgjhBGAA==}
+  '@dev-centr/themed-svg@0.1.1':
+    resolution: {integrity: sha512-hBZH3BKQErb3HRHOVUGL5mxPy6IHZ3EHMH0w4LoHtN+zmlj+wXC5ErVm5r0eTc8+IHN7OTjvaUMF+ZPhoNIMZA==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -79,7 +79,7 @@ packages:
 
 snapshots:
 
-  '@dev-centr/themed-svg@0.1.0':
+  '@dev-centr/themed-svg@0.1.1':
     dependencies:
       '@xmldom/xmldom': 0.8.15
       color-name: 2.1.1

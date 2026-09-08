@@ -8,15 +8,17 @@ Mermaid adapter for responsive SVG normalization and the generator-neutral [Them
 pnpm add @dev-centr/mermaid-svg-css-vars
 ```
 
-The recommended CLI flow produces `host` output for the `<themed-svg>` runtime
-path:
+The recommended CLI flow emits the portable adaptive image and runtime host
+sibling together:
 
 ```bash
-mermaid-svg-css-vars --manifest diagram.theme.json diagram.svg -o diagram.themed.svg
+mermaid-svg-css-vars --manifest diagram.theme.json --mode dual diagram.raw.svg
+mermaid-svg-css-vars --manifest diagram.theme.json --mode dual --check diagram.raw.svg
 ```
 
-Use `--mode standalone-adaptive` for a self-contained external `<img>`, or
-`--mode paired-fixed` for concrete light/dark files. The legacy `--theme-vars`,
-prefix, CSS-variable, and web-normalization flags remain available as a
-separate compatibility route. See **README.adoc** for manifests, palettes,
-output modes, and embedding-boundary details.
+The first command writes `diagram.svg` (`standalone-adaptive`) and
+`diagram.host.svg`; the check command exits nonzero when either committed
+artifact is stale. Use `--mode paired-fixed` for concrete light/dark files. The
+legacy `--theme-vars`, prefix, CSS-variable, and web-normalization flags remain
+available as a separate compatibility route. See **README.adoc** for manifests,
+palettes, output modes, and embedding-boundary details.

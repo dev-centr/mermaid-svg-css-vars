@@ -2,7 +2,21 @@
 
 == Unreleased
 
-* Fixed tag publishing to detect already-published versions without registry credentials.
+== 0.1.1 — 2026-09-08
+
+* Added `dual` mode to emit standalone-adaptive and host artifacts from the
+  same rendered Mermaid SVG.
+* Added `--check` freshness verification with a distinct stale-artifact exit
+  status for CI.
+* Added deterministic `.raw.svg` input naming and explicit adaptive/host output
+  overrides.
+* Updated the published Themed SVG dependency to `0.1.1`.
+* Fixed tag publishing to detect already-published versions without registry
+  credentials.
+
+Details:
+link:changelog-details/2026-09-08-dual-delivery-artifacts.adoc[Dual delivery
+artifacts].
 
 == 0.1.0 — 2026-09-08
 
