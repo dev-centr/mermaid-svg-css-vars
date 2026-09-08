@@ -2,6 +2,7 @@
 
 == Unreleased
 
+* Transferred the project to Dev Centr and changed the unpublished package scope to `@dev-centr/mermaid-svg-css-vars`.
 * Added `prepareThemedMermaidSvg`, an explicit-binding adapter over the independent https://github.com/dev-centr/themed-svg[Themed SVG] standard.
 * Added the CLI `--manifest` route with generic modes, presets, runtime palettes, paired fixed outputs, and structured diagnostics.
 * Made `host` the manifest CLI default for the recommended `<themed-svg>` runtime path.

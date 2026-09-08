@@ -1,17 +1,17 @@
 {
-  "name": "@openshellorg/mermaid-svg-css-vars",
+  "name": "@dev-centr/mermaid-svg-css-vars",
   "version": "0.1.0",
   "description": "Rewrite Mermaid-rendered SVG theme colors to CSS custom properties with fallbacks, plus web-embedding normalization.",
   "type": "module",
   "license": "MIT",
-  "author": "Open Shell Organization",
+  "author": "Dev Centr",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openshellorg/mermaid-svg-css-vars.git"
+    "url": "git+https://github.com/dev-centr/mermaid-svg-css-vars.git"
   },
-  "homepage": "https://github.com/openshellorg/mermaid-svg-css-vars#readme",
+  "homepage": "https://github.com/dev-centr/mermaid-svg-css-vars#readme",
   "bugs": {
-    "url": "https://github.com/openshellorg/mermaid-svg-css-vars/issues"
+    "url": "https://github.com/dev-centr/mermaid-svg-css-vars/issues"
   },
   "keywords": [
     "mermaid",

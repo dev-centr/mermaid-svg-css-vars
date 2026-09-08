@@ -7,43 +7,43 @@ ifdef::env-github[]
 ++++
 <a id="readme-top"></a>
 <div align="center">
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/graphs/contributors"><img src="https://img.shields.io/github/contributors/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Contributors"></a>
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/network/members"><img src="https://img.shields.io/github/forks/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Forks"></a>
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/stargazers"><img src="https://img.shields.io/github/stars/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Stars"></a>
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/issues"><img src="https://img.shields.io/github/issues/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Issues"></a>
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/blob/main/LICENSE"><img src="https://img.shields.io/github/license/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge" alt="License"></a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/graphs/contributors"><img src="https://img.shields.io/github/contributors/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Contributors"></a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/network/members"><img src="https://img.shields.io/github/forks/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Forks"></a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/stargazers"><img src="https://img.shields.io/github/stars/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Stars"></a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/issues"><img src="https://img.shields.io/github/issues/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge" alt="Issues"></a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge" alt="License"></a>
 <br />
 <h3 align="center">mermaid-svg-css-vars</h3>
 <p align="center">
 Post-process Mermaid SVG: theme colors to CSS vars with fallbacks + webCompatibility normalization.<br />
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/issues">Report Bug</a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/issues">Report Bug</a>
 &middot;
-<a href="https://github.com/openshellorg/mermaid-svg-css-vars/issues">Request Feature</a>
+<a href="https://github.com/dev-centr/mermaid-svg-css-vars/issues">Request Feature</a>
 </p>
 </div>
 ++++
 endif::[]
 
 ifndef::env-github[]
-image:https://img.shields.io/github/contributors/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge[Contributors,link=https://github.com/openshellorg/mermaid-svg-css-vars/graphs/contributors]
-image:https://img.shields.io/github/forks/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge[Forks,link=https://github.com/openshellorg/mermaid-svg-css-vars/network/members]
-image:https://img.shields.io/github/stars/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge[Stars,link=https://github.com/openshellorg/mermaid-svg-css-vars/stargazers]
-image:https://img.shields.io/github/issues/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge[Issues,link=https://github.com/openshellorg/mermaid-svg-css-vars/issues]
-image:https://img.shields.io/github/license/openshellorg/mermaid-svg-css-vars.svg?style=for-the-badge[License,link=https://github.com/openshellorg/mermaid-svg-css-vars/blob/main/LICENSE]
+image:https://img.shields.io/github/contributors/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge[Contributors,link=https://github.com/dev-centr/mermaid-svg-css-vars/graphs/contributors]
+image:https://img.shields.io/github/forks/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge[Forks,link=https://github.com/dev-centr/mermaid-svg-css-vars/network/members]
+image:https://img.shields.io/github/stars/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge[Stars,link=https://github.com/dev-centr/mermaid-svg-css-vars/stargazers]
+image:https://img.shields.io/github/issues/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge[Issues,link=https://github.com/dev-centr/mermaid-svg-css-vars/issues]
+image:https://img.shields.io/github/license/dev-centr/mermaid-svg-css-vars.svg?style=for-the-badge[License,link=https://github.com/dev-centr/mermaid-svg-css-vars/blob/main/LICENSE]
 
 = mermaid-svg-css-vars
 
 Post-process Mermaid SVG: theme colors to CSS vars with fallbacks + webCompatibility normalization.
 
-link:https://github.com/openshellorg/mermaid-svg-css-vars/issues[Report Bug] ·
-link:https://github.com/openshellorg/mermaid-svg-css-vars/issues[Request Feature]
+link:https://github.com/dev-centr/mermaid-svg-css-vars/issues[Report Bug] ·
+link:https://github.com/dev-centr/mermaid-svg-css-vars/issues[Request Feature]
 endif::[]
 
 == About The Project
 
 Mermaid adapter that post-processes rendered SVG for responsive web embedding and can apply the generator-neutral https://github.com/dev-centr/themed-svg[Themed SVG] standard.
 
-Package: `@openshellorg/mermaid-svg-css-vars`
+Package: `@dev-centr/mermaid-svg-css-vars`
 
 Mermaid derives theme colors with *khroma* from *concrete* color values, so CSS custom properties cannot be used as renderer inputs. The legacy API rewrites emitted colors to `var(--mermaid-primaryColor, #resolvedFallback)`. Those variables can be controlled when the SVG is inline; a page's CSS does not cross into an SVG loaded through `<img>`.
 
@@ -54,7 +54,7 @@ Mermaid derives theme colors with *khroma* from *concrete* color values, so CSS 
 
 [source,bash]
 ----
-pnpm add github:openshellorg/mermaid-svg-css-vars
+pnpm add github:dev-centr/mermaid-svg-css-vars
 ----
 
 The package and its `@dev-centr/themed-svg` dependency are not yet published to npm.
@@ -70,7 +70,7 @@ import {
   rewriteMermaidSvgCssVars,
   normalizeMermaidSvgForWeb,
   prepareMermaidSvgForWeb,
-} from '@openshellorg/mermaid-svg-css-vars';
+} from '@dev-centr/mermaid-svg-css-vars';
 
 const ready = prepareMermaidSvgForWeb(svg, {
   themeVariables,
@@ -86,7 +86,7 @@ New integrations should use an explicit Themed SVG manifest. Mermaid is the sour
 
 [source,ts]
 ----
-import { prepareThemedMermaidSvg } from '@openshellorg/mermaid-svg-css-vars';
+import { prepareThemedMermaidSvg } from '@dev-centr/mermaid-svg-css-vars';
 
 const result = prepareThemedMermaidSvg(renderedMermaidSvg, manifest, {
   mode: 'host',
@@ -180,10 +180,10 @@ MIT — see link:LICENSE[LICENSE].
 ++++
 == Contact
 
-Open Shell Org — openshell@devcentr.org
+Dev Centr
 
-* Project: https://github.com/openshellorg/mermaid-svg-css-vars
-* Site: https://openshellorg.github.io
+* Project: https://github.com/dev-centr/mermaid-svg-css-vars
+* Site: https://devcentr.org
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
