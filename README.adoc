@@ -93,12 +93,30 @@ const result = prepareThemedMermaidSvg(renderedMermaidSvg, manifest, {
 });
 ----
 
+To produce the portable fallback and progressive host artifact atomically at
+the transform boundary, call the dual-output API. It returns neither SVG when
+either transform reports an error:
+
+[source,ts]
+----
+import {
+  prepareThemedMermaidSvgDualOutput,
+} from '@dev-centr/mermaid-svg-css-vars';
+
+const { standaloneSvg, hostSvg, diagnostics } =
+  prepareThemedMermaidSvgDualOutput(renderedMermaidSvg, manifest, {
+    lightPalette: siteLightPalette,
+    darkPalette: siteDarkPalette,
+  });
+----
+
 The adapter consumes the published `@dev-centr/themed-svg` package.
 
 === CLI
 
-The recommended CLI flow uses a Themed SVG manifest. Render Mermaid once, then
-use `dual` mode to write the portable adaptive artifact and its host sibling:
+The recommended CLI flow uses one Themed SVG manifest. Render Mermaid once,
+then use `--dual-output` to write the portable adaptive artifact and its host
+sibling:
 
 [source,bash]
 ----
@@ -114,7 +132,8 @@ mermaid-svg-css-vars --manifest diagram.theme.json \
 The default names are `diagram.svg` for `standalone-adaptive` output and
 `diagram.host.svg` for runtime output. Use `--output` and `--host-output` to
 override them. The default `host` mode remains available when only one output
-is needed.
+is needed. Keep the Mermaid renderer's intermediate file named `*.raw.svg` so
+the committed pair has the stable `name.svg` and `name.host.svg` convention.
 
 Choose another generic output mode when the embedding boundary requires it:
 

@@ -1,0 +1,17 @@
+= Dual-output API
+:page-audience: Mermaid diagram build authors
+:page-usage-context: release detail
+:page-orig-author: Auto on behalf of Ryan Johnson
+:page-last-author: Auto on behalf of Ryan Johnson
+
+Mermaid diagram builds can now produce the portable standalone-adaptive SVG
+and progressively enhanced host SVG as one operation.
+
+`prepareThemedMermaidSvgDualOutput()` returns both artifacts only when both
+transformations succeed. Diagnostics identify the affected output so build
+logs remain actionable.
+
+The CLI exposes the same operation through `--dual-output`. Default naming
+turns `diagram.raw.svg` into `diagram.svg` and `diagram.host.svg`; explicit
+paths are supported and must remain distinct. `--check` compares both committed
+artifacts without rewriting them and exits with status 3 when either is stale.

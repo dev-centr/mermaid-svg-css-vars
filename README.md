@@ -12,13 +12,16 @@ The recommended CLI flow emits the portable adaptive image and runtime host
 sibling together:
 
 ```bash
-mermaid-svg-css-vars --manifest diagram.theme.json --mode dual diagram.raw.svg
-mermaid-svg-css-vars --manifest diagram.theme.json --mode dual --check diagram.raw.svg
+mermaid-svg-css-vars --manifest diagram.theme.json --dual-output diagram.raw.svg
+mermaid-svg-css-vars --manifest diagram.theme.json --dual-output --check diagram.raw.svg
 ```
 
 The first command writes `diagram.svg` (`standalone-adaptive`) and
 `diagram.host.svg`; the check command exits nonzero when either committed
-artifact is stale. Use `--mode paired-fixed` for concrete light/dark files. The
-legacy `--theme-vars`, prefix, CSS-variable, and web-normalization flags remain
-available as a separate compatibility route. See **README.adoc** for manifests,
-palettes, output modes, and embedding-boundary details.
+artifact is stale. The API equivalent is
+`prepareThemedMermaidSvgDualOutput(svg, manifest, options)`, which withholds
+both outputs if either transform fails. Use `--mode paired-fixed` for concrete
+light/dark files. The legacy `--theme-vars`, prefix, CSS-variable, and
+web-normalization flags remain available as a separate compatibility route.
+See **README.adoc** for manifests, palettes, output modes, and
+embedding-boundary details.

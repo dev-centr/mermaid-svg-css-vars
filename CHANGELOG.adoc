@@ -2,6 +2,17 @@
 
 == Unreleased
 
+== 0.1.2 — 2026-09-08
+
+* Added `prepareThemedMermaidSvgDualOutput()` so build scripts can generate
+  adaptive and host artifacts atomically through the programmatic API.
+* Promoted `--dual-output` as the explicit CLI spelling while retaining the
+  `0.1.1` `--mode dual` spelling as a compatibility alias.
+* Added output-specific diagnostics and rejected colliding dual output paths.
+
+Details:
+link:changelog-details/2026-09-08-dual-output-api.adoc[Dual-output API].
+
 == 0.1.1 — 2026-09-08
 
 * Added `dual` mode to emit standalone-adaptive and host artifacts from the
