@@ -1,0 +1,18 @@
+= Dual delivery artifacts
+:page-audience: Diagram authors and documentation build maintainers
+:page-usage-context: release detail
+:page-orig-author: Auto on behalf of Ryan Johnson
+:page-last-author: Auto on behalf of Ryan Johnson
+
+Mermaid diagrams can now produce their portable and owned-site delivery files
+in one CLI operation. `--dual-output` transforms one rendered Mermaid SVG into
+a self-contained standalone-adaptive `.svg` and a sibling `.host.svg` for
+runtime injection. The earlier `--mode dual` spelling remains an alias.
+
+Inputs ending in `.raw.svg` produce the committed `diagram.svg` and
+`diagram.host.svg` convention automatically. Explicit `--output` and
+`--host-output` paths remain available when a site uses different asset names.
+
+`--check` regenerates both results in memory and exits with status 3 when an
+artifact is missing or stale. This gives CI a deterministic generated-file
+guard without rewriting the working tree.
