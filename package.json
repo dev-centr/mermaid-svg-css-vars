@@ -13,6 +13,10 @@
   "bugs": {
     "url": "https://github.com/dev-centr/mermaid-svg-css-vars/issues"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "keywords": [
     "mermaid",
     "svg",

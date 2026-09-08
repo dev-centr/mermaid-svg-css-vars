@@ -6,6 +6,9 @@
 !LICENSE
 !package.json
 !pnpm-lock.yaml
+!.github/
+!.github/workflows/
+!.github/workflows/publish.yml
 !tsconfig.json
 !src/
 !src/**

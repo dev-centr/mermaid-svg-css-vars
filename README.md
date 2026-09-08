@@ -5,7 +5,7 @@ See **README.adoc** for the full documentation.
 Mermaid adapter for responsive SVG normalization and the generator-neutral [Themed SVG](https://github.com/dev-centr/themed-svg) light/dark standard.
 
 ```bash
-pnpm add github:dev-centr/mermaid-svg-css-vars
+pnpm add @dev-centr/mermaid-svg-css-vars
 ```
 
 The recommended CLI flow produces `host` output for the `<themed-svg>` runtime

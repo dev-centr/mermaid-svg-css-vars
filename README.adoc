@@ -54,10 +54,8 @@ Mermaid derives theme colors with *khroma* from *concrete* color values, so CSS 
 
 [source,bash]
 ----
-pnpm add github:dev-centr/mermaid-svg-css-vars
+pnpm add @dev-centr/mermaid-svg-css-vars
 ----
-
-The package and its `@dev-centr/themed-svg` dependency are not yet published to npm.
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
