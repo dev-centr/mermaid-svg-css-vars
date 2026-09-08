@@ -1,5 +1,9 @@
 = Changelog
 
+== Unreleased
+
+* Fixed tag publishing to detect already-published versions without registry credentials.
+
 == 0.1.0 — 2026-09-08
 
 * Transferred the project to Dev Centr and changed the unpublished package scope to `@dev-centr/mermaid-svg-css-vars`.
