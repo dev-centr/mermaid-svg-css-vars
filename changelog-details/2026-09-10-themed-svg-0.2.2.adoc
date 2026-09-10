@@ -1,0 +1,11 @@
+= Themed SVG 0.2.2 dependency
+:page-audience: Diagram authors and documentation build maintainers
+:page-usage-context: release detail
+:page-orig-author: Auto on behalf of Ryan Johnson
+:page-last-author: Auto on behalf of Ryan Johnson
+
+`@dev-centr/mermaid-svg-css-vars` now depends on
+`@dev-centr/themed-svg` `^0.2.2`. That release rewrites matching inline
+`style` fill/stroke declarations (including Mermaid `!important`) from
+stylesheet bindings so dark host CSS variables recolor Mermaid nodes
+reliably.
