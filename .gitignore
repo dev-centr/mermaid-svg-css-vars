@@ -20,3 +20,8 @@
 !bin/**
 !examples/
 !examples/**
+!/.github/
+!/.github/workflows/
+!/.github/workflows/encoding-guard.yml
+!/.editorconfig
+!/.gitattributes
